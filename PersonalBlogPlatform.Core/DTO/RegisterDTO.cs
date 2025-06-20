@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PersonalBlogPlatform.Core.DTO
 {
-    public class RegisterDTO
+    public class RegisterDto
     {
         public string? DisplayName { get; set; }
         public string? Bio { get; set; }

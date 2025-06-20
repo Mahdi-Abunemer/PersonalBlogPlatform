@@ -6,7 +6,7 @@ namespace PersonalBlogPlatform.Core.DTO
     {
         [Required(ErrorMessage ="Comment can't be empty.")]
         [StringLength(1000)]
-        public  string? contentText { get; set; }
+        public  string? ContentText { get; set; }
 
         public Guid? PostId { get; set; }
     }
