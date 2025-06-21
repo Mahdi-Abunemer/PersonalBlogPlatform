@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PersonalBlogPlatform.Core\PersonalBlogPlatform.Core.csproj" />
+    <ProjectReference Include="..\PersonalBlogPlatform.UI\PersonalBlogPlatform.UI.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersonalBlogPlatform.Core.Domain.IdentityEntities;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -26,5 +27,9 @@ namespace PersonalBlogPlatform.Core.Domain.Entities
         public virtual ICollection<Comment>? Comments { get; set; }
 
         public Guid? CategoryId { get; set; }
+        public Category? Category { get; set; }
+
+        public required Guid CreatedById { get; set; }
+        public required ApplicationUser CreatedBy {  get; set; }
     }
 }
