@@ -2,22 +2,25 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-
 namespace PersonalBlogPlatform.Core.Domain.Entities
 {
     public class Post
     {
         [Key]
         public Guid Id { get; set; }
-        [StringLength(100)]
-        public required string Title { get; set; }
 
-        public required string Content { get; set; }
+        [Required]
+        [StringLength(100)]
+        public string Title { get; set; } = string.Empty;
+
+        [Required]
+        public string Content { get; set; } = string.Empty;
 
         public string? PostDetails { get; set; }
 
+        [Required]
         [DataType(DataType.DateTime)]
-        public required DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
         [DataType(DataType.DateTime)]
         public DateTime? UpdatedAt { get; set; }
@@ -29,7 +32,9 @@ namespace PersonalBlogPlatform.Core.Domain.Entities
         public Guid? CategoryId { get; set; }
         public Category? Category { get; set; }
 
-        public required Guid CreatedById { get; set; }
-        public required ApplicationUser CreatedBy {  get; set; }
+        [Required]
+        public Guid CreatedById { get; set; }
+
+        public ApplicationUser? CreatedBy { get; set; } = default!;
     }
 }
