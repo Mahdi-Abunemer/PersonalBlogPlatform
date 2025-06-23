@@ -9,14 +9,17 @@ namespace PersonalBlogPlatform.Core.Domain.Entities
         [Key]
         public Guid Id { get; set; }
 
-        public required string CategoryName { get; set; }
+        [Required]
+        public  string CategoryName { get; set; }
 
         [Required, MaxLength(100)]
         public string Slug { get; set; } = string.Empty; // URL‑friendly
 
         public virtual ICollection<Post>? Posts { get; set; }
 
-        public required Guid CreatedById { get; set; }
-        public required ApplicationUser CreatedBy { get; set; }
+        [Required]
+        public  Guid CreatedById { get; set; }
+        
+        public  ApplicationUser? CreatedBy { get; set; }
     }
 }
