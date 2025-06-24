@@ -12,11 +12,11 @@ namespace PersonalBlogPlatform.Core.Domain.Entities
 
         [StringLength(1000)]
         public required string ContentText { get; set; }
-
+        
         public Guid? PostId { get; set; }
         public Post? Post { get; set; }
 
-        public required Guid CreatedById { get; set; }
-        public required ApplicationUser CreatedBy { get; set; } 
+        public required Guid AuthorId { get; set; }           
+        public virtual required ApplicationUser Author { get; set; } 
     }
 }

@@ -1,57 +1,57 @@
 [
   {
-    "Id":  "0FCA05DD-6FD1-472D-B39A-6528733DCD3C" ,
+    "Id": "0FCA05DD-6FD1-472D-B39A-6528733DCD3C",
     "Title": "A Weekend Getaway to the Lake",
     "Content": "Last weekend, I escaped to a peaceful lakehouse to recharge. The water was crystal clear, and the sunsets were unforgettable.",
     "PostDetails": "Reflections on rest, nature, and unplugging from the city.",
     "CreatedAt": "2025-06-02T09:00:00Z",
     "UpdatedAt": null,
     "IsPublished": true,
-    "CategoryId": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "Categories": [ { "Id": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44" } ],
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   },
   {
-    "Id":  "87DCE5D7-B70D-4B79-B4E2-14A725E4282A" ,
+    "Id": "87DCE5D7-B70D-4B79-B4E2-14A725E4282A",
     "Title": "My Favorite Summer Salad Recipe",
     "Content": "This refreshing salad combines ripe tomatoes, cucumber, feta cheese, and a homemade lemon vinaigrette. Perfect for hot afternoons!",
     "PostDetails": "A quick, healthy dish for summer meals.",
     "CreatedAt": "2025-06-06T11:30:00Z",
     "UpdatedAt": null,
     "IsPublished": true,
-    "CategoryId": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "Categories": [ { "Id": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44" } ],
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   },
   {
-    "Id":  "8AB19E2B-29CA-4F97-8478-BB4023C81A69" ,
+    "Id": "8AB19E2B-29CA-4F97-8478-BB4023C81A69",
     "Title": "Starting a Small Herb Garden on Your Balcony",
     "Content": "Even if you have no yard space, you can grow basil, mint, and parsley in pots. Here’s how I did it in just three weeks.",
     "PostDetails": "Tips for urban gardening beginners.",
     "CreatedAt": "2025-06-09T08:15:00Z",
     "UpdatedAt": null,
     "IsPublished": true,
-    "CategoryId": "6E6E4652-4CD8-4A5B-9293-E19E7E1A2FA7",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "Categories": [ { "Id": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44" } ],
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   },
   {
-    "Id":  "B499AF0C-2ECD-40AA-91BA-F118F2005142" ,
+    "Id": "B499AF0C-2ECD-40AA-91BA-F118F2005142",
     "Title": "The Joy of Morning Meditation",
     "Content": "I’ve been practicing five minutes of mindfulness every morning, and it’s transformed my focus and calm throughout the day.",
     "PostDetails": "A simple routine for mental clarity.",
     "CreatedAt": "2025-06-12T07:00:00Z",
     "UpdatedAt": null,
     "IsPublished": true,
-    "CategoryId": "6E6E4652-4CD8-4A5B-9293-E19E7E1A2FA7",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "Categories": [ { "Id": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44" } ],
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   },
   {
-    "Id":  "E935EAD1-C74F-4045-AB46-7471975C99E6" ,
+    "Id": "E935EAD1-C74F-4045-AB46-7471975C99E6",
     "Title": "Baking Sourdough Bread at Home",
     "Content": "After a month of trials, I finally perfected my sourdough starter. Here’s the recipe and tips for achieving that perfect crust.",
     "PostDetails": "Step‑by‑step sourdough guide for home bakers.",
     "CreatedAt": "2025-06-17T15:45:00Z",
     "UpdatedAt": null,
     "IsPublished": true,
-    "CategoryId": "E3C82D74-3817-4291-99EA-BCA6FAC7BDAB",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "Categories": [ { "Id": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44" } ],
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   }
 ]
