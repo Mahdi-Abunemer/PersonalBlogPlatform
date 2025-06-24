@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using PersonalBlogPlatform.Core.Domain.Entities;
 
 
 namespace PersonalBlogPlatform.Core.Domain.IdentityEntities
@@ -9,5 +10,8 @@ namespace PersonalBlogPlatform.Core.Domain.IdentityEntities
         public string? Bio { get; set; }
         public string? AvatarUrl { get; set; }
 
+        public virtual ICollection<Category>? Categories { get; set; }
+        public virtual ICollection<Post>? Posts { get; set; }
+        public virtual ICollection<Comment>? Comments { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using PersonalBlogPlatform.Core.Domain.IdentityEntities;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace PersonalBlogPlatform.Core.Domain.Entities
 {
@@ -16,10 +17,10 @@ namespace PersonalBlogPlatform.Core.Domain.Entities
         public string Slug { get; set; } = string.Empty; // URL‑friendly
 
         public virtual ICollection<Post>? Posts { get; set; }
-
         [Required]
-        public  Guid CreatedById { get; set; }
-        
-        public  ApplicationUser? CreatedBy { get; set; }
+        public  Guid AuthorId { get; set; }
+        [Required]
+        [JsonIgnore]
+        public virtual ApplicationUser Author { get; set; } = null!;
     }
 }

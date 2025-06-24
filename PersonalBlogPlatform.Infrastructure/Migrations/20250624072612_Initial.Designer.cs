@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalBlogPlatform.Infrastructure.DbContext;
 
@@ -11,9 +12,11 @@ using PersonalBlogPlatform.Infrastructure.DbContext;
 namespace PersonalBlogPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250624072612_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -180,6 +183,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -193,6 +199,8 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("AuthorId");
 
@@ -228,6 +236,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ApplicationUserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
@@ -241,6 +252,8 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ApplicationUserId");
+
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("PostId");
@@ -252,6 +265,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("AuthorId")
@@ -279,6 +295,8 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicationUserId");
 
                     b.HasIndex("AuthorId");
 
@@ -452,7 +470,7 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         {
                             Id = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "e1f3b766-94b0-4a20-a4ad-d4642b37ad69",
+                            ConcurrencyStamp = "35da3c5f-a64b-4cfd-8979-1aa339d333f9",
                             DisplayName = "Site Admin",
                             Email = "admin@blog.com",
                             EmailConfirmed = true,
@@ -534,8 +552,12 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", null)
                         .WithMany("Categories")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -545,8 +567,12 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", null)
                         .WithMany("Comments")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -562,8 +588,12 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Post", b =>
                 {
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", null)
                         .WithMany("Posts")
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                        .WithMany()
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

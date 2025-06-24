@@ -12,8 +12,8 @@ using PersonalBlogPlatform.Infrastructure.DbContext;
 namespace PersonalBlogPlatform.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250623063423_Initial")]
-    partial class Initial
+    [Migration("20250624073152_RemoveShadowFks")]
+    partial class RemoveShadowFks
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,48 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CategoryPost", b =>
+                {
+                    b.Property<Guid>("CategoriesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("CategoriesId", "PostsId");
+
+                    b.HasIndex("PostsId");
+
+                    b.ToTable("CategoryPost");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoriesId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            PostsId = new Guid("0fca05dd-6fd1-472d-b39a-6528733dcd3c")
+                        },
+                        new
+                        {
+                            CategoriesId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            PostsId = new Guid("87dce5d7-b70d-4b79-b4e2-14a725e4282a")
+                        },
+                        new
+                        {
+                            CategoriesId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            PostsId = new Guid("8ab19e2b-29ca-4f97-8478-bb4023c81a69")
+                        },
+                        new
+                        {
+                            CategoriesId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            PostsId = new Guid("b499af0c-2ecd-40aa-91ba-f118f2005142")
+                        },
+                        new
+                        {
+                            CategoriesId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            PostsId = new Guid("e935ead1-c74f-4045-ab46-7471975c99e6")
+                        });
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
                 {
@@ -141,12 +183,12 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("CategoryName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Slug")
                         .IsRequired()
@@ -155,7 +197,7 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Categories", (string)null);
 
@@ -163,22 +205,22 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             CategoryName = "Travel",
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Slug = "travel"
                         },
                         new
                         {
                             Id = new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             CategoryName = "Cooking",
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Slug = "cooking"
                         },
                         new
                         {
                             Id = new Guid("e3c82d74-3817-4291-99ea-bca6fac7bdab"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             CategoryName = "Gardening",
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Slug = "gardening"
                         });
                 });
@@ -189,20 +231,20 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("ContentText")
                         .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("PostId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CreatedById");
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("PostId");
 
@@ -215,7 +257,7 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CategoryId")
+                    b.Property<Guid>("AuthorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
@@ -224,9 +266,6 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid>("CreatedById")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<bool?>("IsPublished")
                         .HasColumnType("bit");
@@ -244,9 +283,7 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("CreatedById");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Posts", (string)null);
 
@@ -254,10 +291,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("0fca05dd-6fd1-472d-b39a-6528733dcd3c"),
-                            CategoryId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Content = "Last weekend, I escaped to a peaceful lakehouse to recharge. The water was crystal clear, and the sunsets were unforgettable.",
                             CreatedAt = new DateTime(2025, 6, 2, 9, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             IsPublished = true,
                             PostDetails = "Reflections on rest, nature, and unplugging from the city.",
                             Title = "A Weekend Getaway to the Lake"
@@ -265,10 +301,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("87dce5d7-b70d-4b79-b4e2-14a725e4282a"),
-                            CategoryId = new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Content = "This refreshing salad combines ripe tomatoes, cucumber, feta cheese, and a homemade lemon vinaigrette. Perfect for hot afternoons!",
                             CreatedAt = new DateTime(2025, 6, 6, 11, 30, 0, 0, DateTimeKind.Utc),
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             IsPublished = true,
                             PostDetails = "A quick, healthy dish for summer meals.",
                             Title = "My Favorite Summer Salad Recipe"
@@ -276,10 +311,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("8ab19e2b-29ca-4f97-8478-bb4023c81a69"),
-                            CategoryId = new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Content = "Even if you have no yard space, you can grow basil, mint, and parsley in pots. Here’s how I did it in just three weeks.",
                             CreatedAt = new DateTime(2025, 6, 9, 8, 15, 0, 0, DateTimeKind.Utc),
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             IsPublished = true,
                             PostDetails = "Tips for urban gardening beginners.",
                             Title = "Starting a Small Herb Garden on Your Balcony"
@@ -287,10 +321,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("b499af0c-2ecd-40aa-91ba-f118f2005142"),
-                            CategoryId = new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Content = "I’ve been practicing five minutes of mindfulness every morning, and it’s transformed my focus and calm throughout the day.",
                             CreatedAt = new DateTime(2025, 6, 12, 7, 0, 0, 0, DateTimeKind.Utc),
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             IsPublished = true,
                             PostDetails = "A simple routine for mental clarity.",
                             Title = "The Joy of Morning Meditation"
@@ -298,10 +331,9 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         new
                         {
                             Id = new Guid("e935ead1-c74f-4045-ab46-7471975c99e6"),
-                            CategoryId = new Guid("e3c82d74-3817-4291-99ea-bca6fac7bdab"),
+                            AuthorId = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             Content = "After a month of trials, I finally perfected my sourdough starter. Here’s the recipe and tips for achieving that perfect crust.",
                             CreatedAt = new DateTime(2025, 6, 17, 15, 45, 0, 0, DateTimeKind.Utc),
-                            CreatedById = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             IsPublished = true,
                             PostDetails = "Step‑by‑step sourdough guide for home bakers.",
                             Title = "Baking Sourdough Bread at Home"
@@ -423,7 +455,7 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                         {
                             Id = new Guid("58abd188-a359-4443-9644-a926b699b305"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4b709a33-9e1e-485a-b997-6c3d79632a66",
+                            ConcurrencyStamp = "e1f3b766-94b0-4a20-a4ad-d4642b37ad69",
                             DisplayName = "Site Admin",
                             Email = "admin@blog.com",
                             EmailConfirmed = true,
@@ -435,6 +467,21 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                             TwoFactorEnabled = false,
                             UserName = "admin@blog.com"
                         });
+                });
+
+            modelBuilder.Entity("CategoryPost", b =>
+                {
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.Entities.Category", null)
+                        .WithMany()
+                        .HasForeignKey("CategoriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.Entities.Post", null)
+                        .WithMany()
+                        .HasForeignKey("PostsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -490,57 +537,55 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Category", b =>
                 {
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                        .WithMany("Categories")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("CreatedBy");
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Comment", b =>
                 {
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
+                        .WithMany("Comments")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("PersonalBlogPlatform.Core.Domain.Entities.Post", "Post")
                         .WithMany("Comments")
                         .HasForeignKey("PostId");
 
-                    b.Navigation("CreatedBy");
+                    b.Navigation("Author");
 
                     b.Navigation("Post");
                 });
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Post", b =>
                 {
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.Entities.Category", "Category")
+                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "Author")
                         .WithMany("Posts")
-                        .HasForeignKey("CategoryId");
-
-                    b.HasOne("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", "CreatedBy")
-                        .WithMany()
-                        .HasForeignKey("CreatedById")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Category");
-
-                    b.Navigation("CreatedBy");
-                });
-
-            modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Category", b =>
-                {
-                    b.Navigation("Posts");
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.Entities.Post", b =>
                 {
                     b.Navigation("Comments");
+                });
+
+            modelBuilder.Entity("PersonalBlogPlatform.Core.Domain.IdentityEntities.ApplicationUser", b =>
+                {
+                    b.Navigation("Categories");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

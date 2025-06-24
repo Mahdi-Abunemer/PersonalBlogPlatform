@@ -3,18 +3,18 @@
     "Id": "62F4A8C6-A982-4F18-9EF7-932ED1D4DA44",
     "CategoryName": "Travel",
     "Slug": "travel",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   },
   {
     "Id": "6E6E4652-4CD8-4A5B-9293-E19E7E1A2FA7",
     "CategoryName": "Cooking",
     "Slug": "cooking",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   },
   {
     "Id": "E3C82D74-3817-4291-99EA-BCA6FAC7BDAB",
     "CategoryName": "Gardening",
     "Slug": "gardening",
-    "CreatedById": "58ABD188-A359-4443-9644-A926B699B305"
+    "AuthorId": "58ABD188-A359-4443-9644-A926B699B305"
   }
 ]

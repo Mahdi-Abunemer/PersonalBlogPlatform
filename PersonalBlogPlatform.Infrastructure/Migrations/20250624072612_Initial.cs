@@ -168,17 +168,23 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Categories_AspNetUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Categories_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Categories_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -192,23 +198,47 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     IsPublished = table.Column<bool>(type: "bit", nullable: true),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Posts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Posts_AspNetUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Posts_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Posts_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoryPost",
+                columns: table => new
+                {
+                    CategoriesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoryPost", x => new { x.CategoriesId, x.PostsId });
+                    table.ForeignKey(
+                        name: "FK_CategoryPost_Categories_CategoriesId",
+                        column: x => x.CategoriesId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Posts_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
+                        name: "FK_CategoryPost_Posts_PostsId",
+                        column: x => x.PostsId,
+                        principalTable: "Posts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -218,17 +248,23 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ContentText = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedById = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    AuthorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ApplicationUserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Comments_AspNetUsers_CreatedById",
-                        column: x => x.CreatedById,
+                        name: "FK_Comments_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Comments_AspNetUsers_AuthorId",
+                        column: x => x.AuthorId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Comments_Posts_PostId",
                         column: x => x.PostId,
@@ -244,7 +280,7 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "AvatarUrl", "Bio", "ConcurrencyStamp", "DisplayName", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { new Guid("58abd188-a359-4443-9644-a926b699b305"), 0, null, null, "4b709a33-9e1e-485a-b997-6c3d79632a66", "Site Admin", "admin@blog.com", true, false, null, "ADMIN@BLOG.COM", "ADMIN@BLOG.COM", "AQAAAAIAAYagAAAAEM0WcE+XS0GA7sTtQ4NZZVi8gQsw/kiazmMcN3WRtdHVvpyyZ6ZBhtIFFQNbMKOjkw==", null, false, null, false, "admin@blog.com" });
+                values: new object[] { new Guid("58abd188-a359-4443-9644-a926b699b305"), 0, null, null, "35da3c5f-a64b-4cfd-8979-1aa339d333f9", "Site Admin", "admin@blog.com", true, false, null, "ADMIN@BLOG.COM", "ADMIN@BLOG.COM", "AQAAAAIAAYagAAAAEM0WcE+XS0GA7sTtQ4NZZVi8gQsw/kiazmMcN3WRtdHVvpyyZ6ZBhtIFFQNbMKOjkw==", null, false, null, false, "admin@blog.com" });
 
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
@@ -253,24 +289,36 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "CategoryName", "CreatedById", "Slug" },
+                columns: new[] { "Id", "ApplicationUserId", "AuthorId", "CategoryName", "Slug" },
                 values: new object[,]
                 {
-                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), "Travel", new Guid("58abd188-a359-4443-9644-a926b699b305"), "travel" },
-                    { new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"), "Cooking", new Guid("58abd188-a359-4443-9644-a926b699b305"), "cooking" },
-                    { new Guid("e3c82d74-3817-4291-99ea-bca6fac7bdab"), "Gardening", new Guid("58abd188-a359-4443-9644-a926b699b305"), "gardening" }
+                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "Travel", "travel" },
+                    { new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "Cooking", "cooking" },
+                    { new Guid("e3c82d74-3817-4291-99ea-bca6fac7bdab"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "Gardening", "gardening" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Posts",
-                columns: new[] { "Id", "CategoryId", "Content", "CreatedAt", "CreatedById", "IsPublished", "PostDetails", "Title", "UpdatedAt" },
+                columns: new[] { "Id", "ApplicationUserId", "AuthorId", "Content", "CreatedAt", "IsPublished", "PostDetails", "Title", "UpdatedAt" },
                 values: new object[,]
                 {
-                    { new Guid("0fca05dd-6fd1-472d-b39a-6528733dcd3c"), new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), "Last weekend, I escaped to a peaceful lakehouse to recharge. The water was crystal clear, and the sunsets were unforgettable.", new DateTime(2025, 6, 2, 9, 0, 0, 0, DateTimeKind.Utc), new Guid("58abd188-a359-4443-9644-a926b699b305"), true, "Reflections on rest, nature, and unplugging from the city.", "A Weekend Getaway to the Lake", null },
-                    { new Guid("87dce5d7-b70d-4b79-b4e2-14a725e4282a"), new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), "This refreshing salad combines ripe tomatoes, cucumber, feta cheese, and a homemade lemon vinaigrette. Perfect for hot afternoons!", new DateTime(2025, 6, 6, 11, 30, 0, 0, DateTimeKind.Utc), new Guid("58abd188-a359-4443-9644-a926b699b305"), true, "A quick, healthy dish for summer meals.", "My Favorite Summer Salad Recipe", null },
-                    { new Guid("8ab19e2b-29ca-4f97-8478-bb4023c81a69"), new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"), "Even if you have no yard space, you can grow basil, mint, and parsley in pots. Here’s how I did it in just three weeks.", new DateTime(2025, 6, 9, 8, 15, 0, 0, DateTimeKind.Utc), new Guid("58abd188-a359-4443-9644-a926b699b305"), true, "Tips for urban gardening beginners.", "Starting a Small Herb Garden on Your Balcony", null },
-                    { new Guid("b499af0c-2ecd-40aa-91ba-f118f2005142"), new Guid("6e6e4652-4cd8-4a5b-9293-e19e7e1a2fa7"), "I’ve been practicing five minutes of mindfulness every morning, and it’s transformed my focus and calm throughout the day.", new DateTime(2025, 6, 12, 7, 0, 0, 0, DateTimeKind.Utc), new Guid("58abd188-a359-4443-9644-a926b699b305"), true, "A simple routine for mental clarity.", "The Joy of Morning Meditation", null },
-                    { new Guid("e935ead1-c74f-4045-ab46-7471975c99e6"), new Guid("e3c82d74-3817-4291-99ea-bca6fac7bdab"), "After a month of trials, I finally perfected my sourdough starter. Here’s the recipe and tips for achieving that perfect crust.", new DateTime(2025, 6, 17, 15, 45, 0, 0, DateTimeKind.Utc), new Guid("58abd188-a359-4443-9644-a926b699b305"), true, "Step‑by‑step sourdough guide for home bakers.", "Baking Sourdough Bread at Home", null }
+                    { new Guid("0fca05dd-6fd1-472d-b39a-6528733dcd3c"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "Last weekend, I escaped to a peaceful lakehouse to recharge. The water was crystal clear, and the sunsets were unforgettable.", new DateTime(2025, 6, 2, 9, 0, 0, 0, DateTimeKind.Utc), true, "Reflections on rest, nature, and unplugging from the city.", "A Weekend Getaway to the Lake", null },
+                    { new Guid("87dce5d7-b70d-4b79-b4e2-14a725e4282a"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "This refreshing salad combines ripe tomatoes, cucumber, feta cheese, and a homemade lemon vinaigrette. Perfect for hot afternoons!", new DateTime(2025, 6, 6, 11, 30, 0, 0, DateTimeKind.Utc), true, "A quick, healthy dish for summer meals.", "My Favorite Summer Salad Recipe", null },
+                    { new Guid("8ab19e2b-29ca-4f97-8478-bb4023c81a69"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "Even if you have no yard space, you can grow basil, mint, and parsley in pots. Here’s how I did it in just three weeks.", new DateTime(2025, 6, 9, 8, 15, 0, 0, DateTimeKind.Utc), true, "Tips for urban gardening beginners.", "Starting a Small Herb Garden on Your Balcony", null },
+                    { new Guid("b499af0c-2ecd-40aa-91ba-f118f2005142"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "I’ve been practicing five minutes of mindfulness every morning, and it’s transformed my focus and calm throughout the day.", new DateTime(2025, 6, 12, 7, 0, 0, 0, DateTimeKind.Utc), true, "A simple routine for mental clarity.", "The Joy of Morning Meditation", null },
+                    { new Guid("e935ead1-c74f-4045-ab46-7471975c99e6"), null, new Guid("58abd188-a359-4443-9644-a926b699b305"), "After a month of trials, I finally perfected my sourdough starter. Here’s the recipe and tips for achieving that perfect crust.", new DateTime(2025, 6, 17, 15, 45, 0, 0, DateTimeKind.Utc), true, "Step‑by‑step sourdough guide for home bakers.", "Baking Sourdough Bread at Home", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "CategoryPost",
+                columns: new[] { "CategoriesId", "PostsId" },
+                values: new object[,]
+                {
+                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), new Guid("0fca05dd-6fd1-472d-b39a-6528733dcd3c") },
+                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), new Guid("87dce5d7-b70d-4b79-b4e2-14a725e4282a") },
+                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), new Guid("8ab19e2b-29ca-4f97-8478-bb4023c81a69") },
+                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), new Guid("b499af0c-2ecd-40aa-91ba-f118f2005142") },
+                    { new Guid("62f4a8c6-a982-4f18-9ef7-932ed1d4da44"), new Guid("e935ead1-c74f-4045-ab46-7471975c99e6") }
                 });
 
             migrationBuilder.CreateIndex(
@@ -313,14 +361,29 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Categories_CreatedById",
+                name: "IX_Categories_ApplicationUserId",
                 table: "Categories",
-                column: "CreatedById");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_CreatedById",
+                name: "IX_Categories_AuthorId",
+                table: "Categories",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoryPost_PostsId",
+                table: "CategoryPost",
+                column: "PostsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_ApplicationUserId",
                 table: "Comments",
-                column: "CreatedById");
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AuthorId",
+                table: "Comments",
+                column: "AuthorId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_PostId",
@@ -328,14 +391,14 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                 column: "PostId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_CategoryId",
+                name: "IX_Posts_ApplicationUserId",
                 table: "Posts",
-                column: "CategoryId");
+                column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Posts_CreatedById",
+                name: "IX_Posts_AuthorId",
                 table: "Posts",
-                column: "CreatedById");
+                column: "AuthorId");
         }
 
         /// <inheritdoc />
@@ -357,16 +420,19 @@ namespace PersonalBlogPlatform.Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "CategoryPost");
+
+            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Posts");
+                name: "Categories");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Posts");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
