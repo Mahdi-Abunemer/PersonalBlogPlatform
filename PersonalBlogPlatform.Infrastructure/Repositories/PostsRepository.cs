@@ -19,6 +19,7 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
         {
             _db = db;
         }
+
         public async Task<Post> AddPost(Post post)
         {
            _db.Posts.Add(post);
@@ -28,7 +29,7 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
 
         public async Task<bool> DeletePostByPostId(Guid postId)
         {
-            Post? post = await _db.Posts.FindAsync(postId); ;
+            Post? post = await _db.Posts.FindAsync(postId);
             if (post == null)
                 return false;
 
@@ -52,14 +53,16 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
 
         public async Task<List<Post>> GetLatestPosts(int count = 5)
         {
-            return await _db.Posts.Include(p => p.Categories).
-                OrderByDescending(p => p.CreatedAt).Take(count).ToListAsync();
+            return await _db.Posts.Include(p => p.Categories)
+                .OrderByDescending(p => p.CreatedAt)
+                .Take(count)
+                .ToListAsync();
         }
 
         public  async Task<Post?> GetPostByPostId(Guid postId)
         {
-            return await _db.Posts.Include(p => p.Categories).
-                FirstOrDefaultAsync(p => p.Id == postId);
+            return await _db.Posts.Include(p => p.Categories)
+                .FirstOrDefaultAsync(p => p.Id == postId);
         }
 
         public async Task<Post?> UpdatePost(Post post)
