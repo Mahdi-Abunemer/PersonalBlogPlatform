@@ -2,12 +2,7 @@
 using PersonalBlogPlatform.Core.Domain.Entities;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
 using PersonalBlogPlatform.Infrastructure.DbContext;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PersonalBlogPlatform.Infrastructure.Repositories
 {
@@ -70,7 +65,7 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
             Post? matchPost = await _db.Posts.FindAsync(post.Id);
             if (matchPost != null)
             {
-                matchPost.UpdatedAt = DateTime.Now;
+                matchPost.UpdatedAt = DateTime.UtcNow;
                 matchPost.Title = post.Title;
                 matchPost.PostDetails = post.PostDetails;
                 matchPost.Content = post.Content;

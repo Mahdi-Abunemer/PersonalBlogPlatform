@@ -15,12 +15,26 @@ namespace PersonalBlogPlatform.Core.DTO
         public string? PostDetails { get; set; }
 
         [DataType(DataType.DateTime)]
-        public required DateTime CreatedAt { get; set; } = DateTime.Now;
+        public required DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public bool? IsPublished { get; set; }
 
         public virtual ICollection<Comment>? Comments { get; set; }
 
-        public Guid? CategoryId { get; set; }
+        public virtual ICollection<Category>? Categories { get; set; }
+
+        public Post ToPost()
+        {
+            return new Post
+            {
+                Title = Title,
+                Content = Content,
+                PostDetails = PostDetails,
+                CreatedAt = CreatedAt,
+                IsPublished = IsPublished,
+                Comments = Comments,
+                Categories = Categories
+            }; 
+        }
     }
 }
