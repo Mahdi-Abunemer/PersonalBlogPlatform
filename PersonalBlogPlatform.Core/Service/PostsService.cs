@@ -1,110 +1,139 @@
-﻿using PersonalBlogPlatform.Core.Domain.Entities;
+﻿using AutoMapper;
+using PersonalBlogPlatform.Core.Domain.Entities;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
 using PersonalBlogPlatform.Core.DTO;
 using PersonalBlogPlatform.Core.Helper;
 using PersonalBlogPlatform.Core.ServiceContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PersonalBlogPlatform.Core.Service
 {
     public class PostsService : IPostsService
     {
         private readonly IPostsRepository _postsRepository;
+        private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IMapper _mapper;
 
-        public PostsService(IPostsRepository postsRepository)
+        public PostsService(
+            IPostsRepository postsRepository,
+            ICategoriesRepository categoriesRepository,
+            IMapper mapper)
         {
             _postsRepository = postsRepository;
+            _categoriesRepository = categoriesRepository;
+            _mapper = mapper;
         }
 
-        private static List<PostResponse> ToListPostResponse(IEnumerable<Post> posts)
-            => posts.Select(p => p.ToPostResponse()).ToList();
+        private List<PostResponse> ToListPostResponse(IEnumerable<Post> posts)
+        {
+            return posts
+                .Select(post => _mapper.Map<PostResponse>(post))
+                .ToList();
+        }
 
         public async Task<PostResponse> AddPost(PostAddRequest postAddRequest)
         {
-           if (postAddRequest == null) 
+            if (postAddRequest == null)
                 throw new ArgumentNullException(nameof(postAddRequest));
 
             ValidationHelper.ModelValidation(postAddRequest);
 
-           Post post = postAddRequest.ToPost();
+            var post = _mapper.Map<Post>(postAddRequest);
 
             post.Id = Guid.NewGuid();
+            post.Categories = new List<Category>();
+
+            if (postAddRequest.CategoryIds?.Any() == true)
+            {
+                foreach (var categoryId in postAddRequest.CategoryIds)
+                {
+                    var category = await _categoriesRepository.GetCategoryByCategoryId(categoryId);
+                    if (category == null)
+                        throw new ArgumentNullException($"Category {categoryId} not found");
+
+                    post.Categories.Add(category);
+                }
+            }
 
             await _postsRepository.AddPost(post);
 
-            return post.ToPostResponse();
+            return _mapper.Map<PostResponse>(post);
         }
 
-        public async Task<bool> DeletePostByPostId(Guid postId)
+        public async Task DeletePost(Guid postId)
         {
-            var deleted = await _postsRepository.DeletePostByPostId(postId);
+            if (postId == Guid.Empty)
+                throw new ArgumentException("Post ID cannot be empty", nameof(postId));
 
-            if (!deleted)
-                throw new ArgumentNullException($"Post {postId} not found");
+            var post = await _postsRepository.GetPostByPostId(postId);
+            if (post == null)
+                throw new ArgumentNullException(nameof(post), $"Post {postId} not found");
 
-            return true;
+            await _postsRepository.DeletePost(post);
         }
 
         public async Task<List<PostResponse>> GetAllPosts()
         {
-          List<Post> posts = await _postsRepository.GetAllPosts();
-
-          return ToListPostResponse(posts);
+            var posts = await _postsRepository.GetAllPosts();
+            return ToListPostResponse(posts);
         }
 
         public async Task<List<PostResponse>> GetFilteredPosts(Guid categoryId)
         {
-            //TO DO : Verifying that the category exist in the data store
-            //(to add a method here from => "CategoryRepo")
-            List<Post> posts  = await _postsRepository.GetFilteredPosts(categoryId);
-         
+            if (categoryId == Guid.Empty)
+                throw new ArgumentException("Category ID cannot be empty", nameof(categoryId));
+
+            var category = await _categoriesRepository.GetCategoryByCategoryId(categoryId);
+            if (category == null)
+                throw new ArgumentNullException(nameof(category), $"Category {categoryId} not found");
+
+            var posts = await _postsRepository.GetFilteredPosts(categoryId);
             return ToListPostResponse(posts);
         }
-      
+
         public async Task<List<PostResponse>> GetLatestPosts(int count = 5)
         {
-            List<Post> posts = await _postsRepository.GetLatestPosts(count);
+            if (count <= 0)
+                throw new ArgumentException("Count must be greater than zero", nameof(count));
 
+            var posts = await _postsRepository.GetLatestPosts(count);
             return ToListPostResponse(posts);
         }
 
-        public async Task<PostResponse?> GetPostById(Guid postId)
+        public async Task<PostResponse> GetPostById(Guid postId)
         {
-            Post? post = await _postsRepository.GetPostByPostId(postId);
+            if (postId == Guid.Empty)
+                throw new ArgumentException("Post ID cannot be empty", nameof(postId));
 
+            var post = await _postsRepository.GetPostByPostId(postId);
             if (post == null)
-                throw new ArgumentNullException(nameof(post));
+                throw new ArgumentNullException(nameof(post), $"Post {postId} not found");
 
-            return post.ToPostResponse();
+            return _mapper.Map<PostResponse>(post);
         }
 
-        public async Task<PostResponse?> UpdatePost(PostUpdateRequest postUpdateRequest)
+        public async Task<PostResponse> UpdatePost(PostUpdateRequest postUpdateRequest)
         {
             if (postUpdateRequest == null)
                 throw new ArgumentNullException(nameof(postUpdateRequest));
 
+            if (postUpdateRequest.Id == Guid.Empty)
+                throw new ArgumentException("Post ID cannot be empty", nameof(postUpdateRequest.Id));
+
             ValidationHelper.ModelValidation(postUpdateRequest);
 
-            Post? post = await _postsRepository.GetPostByPostId(postUpdateRequest.Id);
-
+            var post = await _postsRepository.GetPostByPostId(postUpdateRequest.Id);
             if (post == null)
-                throw new ArgumentNullException($"Post {postUpdateRequest.Id} not found");
-
+                throw new ArgumentNullException(nameof(post), $"Post {postUpdateRequest.Id} not found");
 
             post.UpdatedAt = DateTime.UtcNow;
-            post.Title = postUpdateRequest.Title;
+            post.Title = postUpdateRequest.Title!;
             post.PostDetails = postUpdateRequest.PostDetails;
-            post.Content = postUpdateRequest.Content;
+            post.Content = postUpdateRequest.Content!;
             post.IsPublished = postUpdateRequest.IsPublished;
 
-            Post? postUpdated =  await _postsRepository.UpdatePost(post);
-            
-            return postUpdated?.ToPostResponse();
+            await _postsRepository.UpdatePost(post);
+
+            return _mapper.Map<PostResponse>(post);
         }
     }
 }

@@ -24,14 +24,14 @@ namespace PersonalBlogPlatform.Core.Domain.RepositoryContracts
         /// </summary>
         /// <param name="post">Post object to update</param>
         /// <returns>Returns the post updated object</returns>
-        Task<Post?> UpdatePost(Post post);
+        Task UpdatePost(Post post);
 
         /// <summary>
         /// Delete post object from the database based on post id 
         /// </summary>
         /// <param name="postId"></param>
         /// <returns>Returns true, if the deletion is successful; otherwise false</returns>
-        Task<bool> DeletePostByPostId(Guid postId);
+        Task DeletePost(Post post);
 
         /// <summary>
         /// Return All posts from the database

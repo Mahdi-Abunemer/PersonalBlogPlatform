@@ -8,7 +8,6 @@ namespace PersonalBlogPlatform.Core.DTO
         public string? CategoryName { get; set; }
 
         [Required, MaxLength(100)]
-        public string? Slug { get; set; }  
-
+        public string? Slug { get; set; }
     }
 }

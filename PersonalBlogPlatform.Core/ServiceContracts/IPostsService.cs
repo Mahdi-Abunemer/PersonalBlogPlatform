@@ -1,4 +1,5 @@
-﻿using PersonalBlogPlatform.Core.DTO;
+﻿using PersonalBlogPlatform.Core.Domain.Entities;
+using PersonalBlogPlatform.Core.DTO;
 
 namespace PersonalBlogPlatform.Core.ServiceContracts
 {
@@ -6,13 +7,13 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
     {
         Task<PostResponse> AddPost(PostAddRequest postAddRequest);
 
-        Task<PostResponse?> UpdatePost(PostUpdateRequest postUpdateRequest);
+        Task<PostResponse> UpdatePost(PostUpdateRequest postUpdateRequest);
 
-        Task<bool> DeletePostByPostId(Guid postId);
+        Task DeletePost(Guid postId);
 
         Task<List<PostResponse>> GetAllPosts();
 
-        Task<PostResponse?> GetPostById(Guid postId);
+        Task<PostResponse> GetPostById(Guid postId);
 
         Task<List<PostResponse>> GetLatestPosts(int count = 5);
 

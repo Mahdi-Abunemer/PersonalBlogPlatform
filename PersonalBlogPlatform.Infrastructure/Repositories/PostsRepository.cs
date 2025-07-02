@@ -3,13 +3,12 @@ using PersonalBlogPlatform.Core.Domain.Entities;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
 using PersonalBlogPlatform.Infrastructure.DbContext;
 
-
 namespace PersonalBlogPlatform.Infrastructure.Repositories
 {
     public class PostsRepository : IPostsRepository
     {
-
         private readonly ApplicationDbContext _db; 
+
         public PostsRepository ( ApplicationDbContext db)
         {
             _db = db;
@@ -19,18 +18,13 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
         {
            _db.Posts.Add(post);
            await _db.SaveChangesAsync();
-            return post;
+           return post;
         }
 
-        public async Task<bool> DeletePostByPostId(Guid postId)
+        public async Task DeletePost(Post post)
         {
-            Post? post = await _db.Posts.FindAsync(postId);
-            if (post == null)
-                return false;
-
             _db.Posts.Remove(post);
-            int rowsDeleted = await _db.SaveChangesAsync();
-            return rowsDeleted > 0 ;
+            await _db.SaveChangesAsync();
         }
 
         public async Task<List<Post>> GetAllPosts()
@@ -60,20 +54,10 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.Id == postId);
         }
 
-        public async Task<Post?> UpdatePost(Post post)
+        public async Task UpdatePost(Post post)
         {
-            Post? matchPost = await _db.Posts.FindAsync(post.Id);
-            if (matchPost != null)
-            {
-                matchPost.UpdatedAt = DateTime.UtcNow;
-                matchPost.Title = post.Title;
-                matchPost.PostDetails = post.PostDetails;
-                matchPost.Content = post.Content;
-                matchPost.IsPublished = post.IsPublished;
-
-                await _db.SaveChangesAsync();
-            }
-            return matchPost;
+            _db.Posts.Update(post);
+            await _db.SaveChangesAsync();
         }
     }
 }

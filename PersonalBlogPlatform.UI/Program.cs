@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using PersonalBlogPlatform.Core.AutoMapperProfiles;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
 using PersonalBlogPlatform.Core.Service;
 using PersonalBlogPlatform.Core.ServiceContracts;
@@ -15,6 +16,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IPostsRepository , PostsRepository>();
 
 builder.Services.AddScoped<IPostsService, PostsService>();
+
+builder.Services.AddAutoMapper(typeof(PostAddRequestProfile).Assembly);
+
+builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+
+builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
 var app = builder.Build();
 
