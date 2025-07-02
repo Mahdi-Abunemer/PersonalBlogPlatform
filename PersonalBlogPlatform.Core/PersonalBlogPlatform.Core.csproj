@@ -7,15 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.17" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.DataAnnotations" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.3.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Domain\RepositoryContracts\" />
-    <Folder Include="Service\" />
-    <Folder Include="ServiceContracts\" />
   </ItemGroup>
 
 </Project>
