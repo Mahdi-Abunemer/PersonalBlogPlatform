@@ -15,7 +15,7 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
 
         Task<PostResponse> GetPostById(Guid postId);
 
-        Task<List<PostResponse>> GetLatestPosts(int count = 5);
+        Task<List<PostResponse>> GetLatestPosts(int count);
 
         Task<List<PostResponse>> GetFilteredPosts(Guid categoryId);
     }

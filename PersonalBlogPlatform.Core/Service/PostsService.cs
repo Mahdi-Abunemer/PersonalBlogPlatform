@@ -90,7 +90,7 @@ namespace PersonalBlogPlatform.Core.Service
             return ToListPostResponse(posts);
         }
 
-        public async Task<List<PostResponse>> GetLatestPosts(int count = 5)
+        public async Task<List<PostResponse>> GetLatestPosts(int count)
         {
             if (count <= 0)
                 throw new ArgumentException("Count must be greater than zero", nameof(count));

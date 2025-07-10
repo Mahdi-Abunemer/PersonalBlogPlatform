@@ -18,8 +18,8 @@ namespace PersonalBlogPlatform.Core.DTO
 
         public bool? IsPublished { get; set; }
 
-        public virtual ICollection<Comment>? Comments { get; set; }
+        public List<Guid>? CommentIds { get; set; }
 
-        public virtual ICollection<Category>? Categories { get; set; }
+        public List<Guid>? CategoryIds { get; set; }
     }
 }

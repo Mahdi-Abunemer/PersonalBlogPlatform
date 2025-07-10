@@ -40,9 +40,10 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
            .ToListAsync();
         }
 
-        public async Task<List<Post>> GetLatestPosts(int count = 5)
+        public async Task<List<Post>> GetLatestPosts(int count)
         {
-            return await _db.Posts.Include(p => p.Categories)
+            return await _db.Posts.Where(p => p.IsPublished == true)
+                .Include(p => p.Categories)
                 .OrderByDescending(p => p.CreatedAt)
                 .Take(count)
                 .ToListAsync();

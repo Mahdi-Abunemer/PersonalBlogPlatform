@@ -23,9 +23,13 @@ builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
+builder.Services.AddControllers();
+
 var app = builder.Build();
 
 app.UseStaticFiles();
 app.UseRouting();
+app.UseAuthorization();
+app.MapControllers();
 
 app.Run();

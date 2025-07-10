@@ -50,7 +50,7 @@ namespace PersonalBlogPlatform.Core.Domain.RepositoryContracts
         /// Get Latest Posts from the database
         /// </summary>
         /// <returns>Returns the latest posts from the table</returns>
-        Task<List<Post>> GetLatestPosts(int count=5);
+        Task<List<Post>> GetLatestPosts(int count);
 
         /// <summary>
         /// Get filtered posts based on category id from the database 
