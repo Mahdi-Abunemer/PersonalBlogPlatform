@@ -33,6 +33,6 @@ namespace PersonalBlogPlatform.Core.DTO
         [Compare("Password", ErrorMessage = "Confirm Password and Password do not match")]
         public string? ConfirmPassword { get; set; }
 
-        public UserTypeOptions UserType { get; set; } = UserTypeOptions.Reader;
+        public UserTypeOptions UserType { get; set; } = UserTypeOptions.User;
     }
 }

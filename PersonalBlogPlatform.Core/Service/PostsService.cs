@@ -2,6 +2,7 @@
 using PersonalBlogPlatform.Core.Domain.Entities;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
 using PersonalBlogPlatform.Core.DTO;
+using PersonalBlogPlatform.Core.Exceptions;
 using PersonalBlogPlatform.Core.Helper;
 using PersonalBlogPlatform.Core.ServiceContracts;
 
@@ -33,7 +34,7 @@ namespace PersonalBlogPlatform.Core.Service
         public async Task<PostResponse> AddPost(PostAddRequest postAddRequest)
         {
             if (postAddRequest == null)
-                throw new ArgumentNullException(nameof(postAddRequest));
+                throw new ArgumentNullException($"The post shouldn't be empty {nameof(postAddRequest)}");
 
             ValidationHelper.ModelValidation(postAddRequest);
 
@@ -48,7 +49,7 @@ namespace PersonalBlogPlatform.Core.Service
                 {
                     var category = await _categoriesRepository.GetCategoryByCategoryId(categoryId);
                     if (category == null)
-                        throw new ArgumentNullException($"Category {categoryId} not found");
+                        throw new NotFoundException($"Category {categoryId} not found");
 
                     post.Categories.Add(category);
                 }
@@ -62,11 +63,11 @@ namespace PersonalBlogPlatform.Core.Service
         public async Task DeletePost(Guid postId)
         {
             if (postId == Guid.Empty)
-                throw new ArgumentException("Post ID cannot be empty", nameof(postId));
+                throw new InvalidIDException($"Post ID:{postId} cannot be empty");
 
             var post = await _postsRepository.GetPostByPostId(postId);
             if (post == null)
-                throw new ArgumentNullException(nameof(post), $"Post {postId} not found");
+                throw new NotFoundException($"Post: {postId} is not found");
 
             await _postsRepository.DeletePost(post);
         }
@@ -80,11 +81,11 @@ namespace PersonalBlogPlatform.Core.Service
         public async Task<List<PostResponse>> GetFilteredPosts(Guid categoryId)
         {
             if (categoryId == Guid.Empty)
-                throw new ArgumentException("Category ID cannot be empty", nameof(categoryId));
+                throw new InvalidIDException($"Category ID:{categoryId} cannot be empty");
 
             var category = await _categoriesRepository.GetCategoryByCategoryId(categoryId);
             if (category == null)
-                throw new ArgumentNullException(nameof(category), $"Category {categoryId} not found");
+                throw new NotFoundException($"Category {categoryId} not found");
 
             var posts = await _postsRepository.GetFilteredPosts(categoryId);
             return ToListPostResponse(posts);
@@ -102,7 +103,7 @@ namespace PersonalBlogPlatform.Core.Service
         public async Task<PostResponse> GetPostById(Guid postId)
         {
             if (postId == Guid.Empty)
-                throw new ArgumentException("Post ID cannot be empty", nameof(postId));
+                throw new InvalidIDException($"Post ID:{postId} cannot be empty");
 
             var post = await _postsRepository.GetPostByPostId(postId);
             if (post == null)
@@ -123,7 +124,7 @@ namespace PersonalBlogPlatform.Core.Service
 
             var post = await _postsRepository.GetPostByPostId(postUpdateRequest.Id);
             if (post == null)
-                throw new ArgumentNullException(nameof(post), $"Post {postUpdateRequest.Id} not found");
+                throw new NotFoundException($"Post {postUpdateRequest.Id} not found");
 
             post.UpdatedAt = DateTime.UtcNow;
             post.Title = postUpdateRequest.Title!;

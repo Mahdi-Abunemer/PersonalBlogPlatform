@@ -5,8 +5,17 @@ using PersonalBlogPlatform.Core.Service;
 using PersonalBlogPlatform.Core.ServiceContracts;
 using PersonalBlogPlatform.Infrastructure.DbContext;
 using PersonalBlogPlatform.Infrastructure.Repositories;
+using PersonalBlogPlatform.UI.Filters;
+using PersonalBlogPlatform.UI.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((HostBuilderContext context, IServiceProvider services, LoggerConfiguration configuration) =>
+{
+    configuration.ReadFrom.Configuration(context.Configuration)
+    .ReadFrom.Services(services);
+});
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -23,9 +32,17 @@ builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LoggingActionFilter>();
+});
 
 var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseExceptionHadlingMiddleware();
+}
 
 app.UseStaticFiles();
 app.UseRouting();

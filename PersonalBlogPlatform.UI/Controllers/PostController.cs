@@ -26,7 +26,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         }
 
         [HttpGet]
-        [Route("[Action]/{postId}")]
+        [Route("[Action]/{postId:guid}")]
         public async Task<IActionResult> GetPost(Guid postId) 
         {
            var post = await _postsService.GetPostById(postId);
@@ -35,7 +35,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         }
 
         [HttpGet]
-        [Route("[Action]/{categoryId}")]
+        [Route("[Action]/{categoryId:guid}")]
         public async Task<IActionResult> GetFilteredPosts(Guid categoryId)
         {
             var posts = await _postsService.GetFilteredPosts(categoryId);
@@ -63,7 +63,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         }
 
         [HttpDelete]
-        [Route("[Action]/{postId}")]
+        [Route("[Action]/{postId:guid}")]
         public async Task<IActionResult> Delete(Guid postId) 
         {
             await _postsService.DeletePost(postId);
