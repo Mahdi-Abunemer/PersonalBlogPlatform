@@ -31,7 +31,7 @@ namespace PersonalBlogPlatform.Core.Service
                 .ToList();
         }
 
-        public async Task<PostResponse> AddPost(PostAddRequest postAddRequest)
+        public async Task<PostResponse> AddPost(PostAddRequest postAddRequest , Guid userId)
         {
             if (postAddRequest == null)
                 throw new ArgumentNullException($"The post shouldn't be empty {nameof(postAddRequest)}");
@@ -40,7 +40,9 @@ namespace PersonalBlogPlatform.Core.Service
 
             var post = _mapper.Map<Post>(postAddRequest);
 
+            post.CreatedAt = DateTime.UtcNow;
             post.Id = Guid.NewGuid();
+            post.AuthorId = userId;
             post.Categories = new List<Category>();
 
             if (postAddRequest.CategoryIds?.Any() == true)

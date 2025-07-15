@@ -5,7 +5,7 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
 {
     public interface IPostsService
     {
-        Task<PostResponse> AddPost(PostAddRequest postAddRequest);
+        Task<PostResponse> AddPost(PostAddRequest postAddRequest,Guid userId);
 
         Task<PostResponse> UpdatePost(PostUpdateRequest postUpdateRequest);
 

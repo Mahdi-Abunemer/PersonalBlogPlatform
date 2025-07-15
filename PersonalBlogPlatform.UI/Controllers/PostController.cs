@@ -12,11 +12,13 @@ namespace PersonalBlogPlatform.UI.Controllers
     public class PostController : ControllerBase
     {
         private readonly IPostsService _postsService;
-        public PostController(IPostsService postsService)
+        private readonly IProfileService _profileService;
+        public PostController(IPostsService postsService, IProfileService profileService)
         {
             _postsService = postsService;
+            _profileService = profileService;
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetAllPosts() 
         {
@@ -58,11 +60,12 @@ namespace PersonalBlogPlatform.UI.Controllers
         [Route("[Action]")]
         public async Task<IActionResult> Add([FromBody] PostAddRequest postAddRequest)
         {
-            var post = await _postsService.AddPost(postAddRequest);
+            var user = await _profileService.GetCurrentUserAsync();
+            var post = await _postsService.AddPost(postAddRequest , user.Id);
 
             return Ok(post);
         }
-
+        
         [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("[Action]/{postId:guid}")]

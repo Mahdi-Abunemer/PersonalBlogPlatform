@@ -55,6 +55,8 @@ builder.Services.AddAutoMapper(typeof(PostAddRequestProfile).Assembly);
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 
+builder.Services.AddScoped<IProfileService , ProfileService>();
+
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
 builder.Services.AddControllers(options =>

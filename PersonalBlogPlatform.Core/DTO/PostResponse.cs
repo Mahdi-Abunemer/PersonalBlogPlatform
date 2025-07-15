@@ -18,6 +18,8 @@ namespace PersonalBlogPlatform.Core.DTO
 
         public bool? IsPublished { get; set; }
 
+        public Guid AuthorId { get; set; }
+
         public List<Guid>? CommentIds { get; set; }
 
         public List<Guid>? CategoryIds { get; set; }
