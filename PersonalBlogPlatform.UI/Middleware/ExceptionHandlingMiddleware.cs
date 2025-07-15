@@ -50,6 +50,7 @@ namespace PersonalBlogPlatform.UI.Middleware
                 NotFoundException => StatusCodes.Status404NotFound,
                 InvalidIDException => StatusCodes.Status400BadRequest,
                 UnauthorizedAccessException => StatusCodes.Status401Unauthorized,
+                ForbiddenException => StatusCodes.Status403Forbidden,
                 _ => StatusCodes.Status500InternalServerError
             };
 

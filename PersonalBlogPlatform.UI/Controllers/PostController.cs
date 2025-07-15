@@ -16,7 +16,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         {
             _postsService = postsService;
         }
-       
+        
         [HttpGet]
         public async Task<IActionResult> GetAllPosts() 
         {
@@ -53,6 +53,7 @@ namespace PersonalBlogPlatform.UI.Controllers
             return Ok(posts);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [Route("[Action]")]
         public async Task<IActionResult> Add([FromBody] PostAddRequest postAddRequest)
@@ -62,6 +63,7 @@ namespace PersonalBlogPlatform.UI.Controllers
             return Ok(post);
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpDelete]
         [Route("[Action]/{postId:guid}")]
         public async Task<IActionResult> Delete(Guid postId) 
@@ -71,6 +73,7 @@ namespace PersonalBlogPlatform.UI.Controllers
             return Ok();
         }
 
+        [Authorize(Policy = "AdminOnly")]
         [HttpPut]
         [Route("[Action]")]
         public async Task<IActionResult> Update([FromBody] PostUpdateRequest postUpdateRequest)
