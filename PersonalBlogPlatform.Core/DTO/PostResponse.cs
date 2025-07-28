@@ -1,5 +1,4 @@
-﻿
-using PersonalBlogPlatform.Core.Domain.Entities;
+﻿using PersonalBlogPlatform.Core.Domain.Entities;
 using System.ComponentModel.DataAnnotations;
 
 namespace PersonalBlogPlatform.Core.DTO
@@ -13,14 +12,16 @@ namespace PersonalBlogPlatform.Core.DTO
 
         public string? PostDetails { get; set; }
 
-        public DateTime CreatedAt { get; set; } 
+        public DateTime CreatedAt { get; set; }
 
-        public DateTime? UpdatedAt { get; set; } 
+        public DateTime? UpdatedAt { get; set; }
 
         public bool? IsPublished { get; set; }
 
-        public virtual ICollection<Comment>? Comments { get; set; }
+        public Guid AuthorId { get; set; }
 
-        public Guid? CategoryId { get; set; }
+        public List<Guid>? CommentIds { get; set; }
+
+        public List<Guid>? CategoryIds { get; set; }
     }
 }
