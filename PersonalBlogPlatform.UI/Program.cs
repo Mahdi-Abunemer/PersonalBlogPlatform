@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using PersonalBlogPlatform.Core.AutoMapperProfiles;
 using PersonalBlogPlatform.Core.Domain.IdentityEntities;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
@@ -13,6 +15,7 @@ using PersonalBlogPlatform.UI.Authorization;
 using PersonalBlogPlatform.UI.Filters;
 using PersonalBlogPlatform.UI.Middleware;
 using Serilog;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +66,29 @@ builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();
 });
+
+builder.Services.AddScoped<ITokenService , TokenService>();
+
+//Jwt
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+  .AddJwtBearer(options =>
+  {
+      options.TokenValidationParameters = new TokenValidationParameters()
+      {
+          ValidateAudience = true,
+          ValidateIssuer = true,
+          ValidateLifetime = true,
+          ValidateIssuerSigningKey = true,
+          ValidAudience = builder.Configuration["Jwt:Audience"],
+          ValidIssuer = builder.Configuration["Jwt:Issuer"],
+          IssuerSigningKey = new SymmetricSecurityKey
+            (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"])),
+      };
+  });
 
 var app = builder.Build();
 

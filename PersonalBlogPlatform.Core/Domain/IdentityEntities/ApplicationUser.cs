@@ -13,5 +13,8 @@ namespace PersonalBlogPlatform.Core.Domain.IdentityEntities
         public virtual ICollection<Category>? Categories { get; set; }
         public virtual ICollection<Post>? Posts { get; set; }
         public virtual ICollection<Comment>? Comments { get; set; }
+
+        public string? RefreshToken { get; set; } = null; 
+        public DateTime RefreshExpirationTime { get; set; }
     }
 }
