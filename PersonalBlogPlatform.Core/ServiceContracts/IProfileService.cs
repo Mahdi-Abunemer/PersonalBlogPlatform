@@ -16,5 +16,9 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
        public Task<ApplicationUser> Register(RegisterDto registerDto);
 
        public Task StoreRefreshToken(ApplicationUser user , TokenResponse token);
+
+       public Task<ApplicationUser> Login(LoginDto loginDto);
+
+       public Task Logout();
     }
 }

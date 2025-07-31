@@ -67,6 +67,8 @@ builder.Services.AddAutoMapper(typeof(RegisterDtoProfile).Assembly);
 
 builder.Services.AddScoped<RegisterUseCase>();
 
+builder.Services.AddScoped<LoginUseCase>();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();

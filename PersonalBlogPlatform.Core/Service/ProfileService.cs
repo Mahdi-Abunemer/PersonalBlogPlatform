@@ -11,6 +11,7 @@ using PersonalBlogPlatform.Core.Token;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,35 @@ namespace PersonalBlogPlatform.Core.Service
                 throw new NotFoundException("User not found");
 
             return user;
+        }
+
+        public async Task<ApplicationUser> Login(LoginDto loginDto)
+        {
+            var user = await _userManager.FindByEmailAsync(loginDto.Email);
+            if (user == null)
+                throw new AuthenticationException("Invalid email or password.");
+
+            var signInResult = await _signInManager
+                .CheckPasswordSignInAsync(user, loginDto.Password, lockoutOnFailure: true);
+            if (signInResult.IsLockedOut)
+                throw new AuthenticationException("Account locked. Please try again later.");
+
+            if (!signInResult.Succeeded)
+                throw new AuthenticationException("Invalid email or password.");
+
+            return user;
+        }
+
+        public async Task Logout()
+        {
+            var user = await GetCurrentUserAsync();
+
+            user.RefreshToken = null;
+            user.RefreshExpirationTime = DateTime.UtcNow;
+
+            await _userManager.UpdateAsync(user);
+
+            await _signInManager.SignOutAsync();
         }
 
         public async Task<ApplicationUser> Register(RegisterDto registerDto)
