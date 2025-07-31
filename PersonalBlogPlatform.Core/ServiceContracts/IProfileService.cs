@@ -24,5 +24,9 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
        public Task<ApplicationUser> GetUserByRefreshToken(string refreshToken);
 
        public bool ValidateRefreshToken(ApplicationUser user, string refreshToken);
+
+       public Task<UserDto> GetUserProfileAsync();
+
+        public Task<UserDto> UpdateUserProfileAsync(UserDto userDto);
     }
 }

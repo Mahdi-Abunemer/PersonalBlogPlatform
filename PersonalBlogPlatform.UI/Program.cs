@@ -71,6 +71,8 @@ builder.Services.AddScoped<LoginUseCase>();
 
 builder.Services.AddScoped<RefreshTokenUseCase>();
 
+builder.Services.AddAutoMapper(typeof(UserDtoProfile).Assembly);
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();

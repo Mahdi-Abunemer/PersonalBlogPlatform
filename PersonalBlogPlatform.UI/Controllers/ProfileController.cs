@@ -62,5 +62,23 @@ namespace PersonalBlogPlatform.UI.Controllers
 
             return Ok(newToken);
         }
+
+        [HttpGet]
+        [Route("[Action]")]
+        [Authorize]
+        public async Task<IActionResult> GetUserProfile()
+        {
+            var user = await _profileService.GetUserProfileAsync();
+            return Ok(user);
+        }
+
+        [HttpPut]
+        [Route("[Action]")]
+        [Authorize]
+        public async Task<IActionResult> UpdateUserProfile(UserDto userDto)
+        {
+            var user = await _profileService.UpdateUserProfileAsync(userDto);
+            return Ok(user);
+        }
     }
 }

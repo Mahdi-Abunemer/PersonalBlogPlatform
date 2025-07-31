@@ -171,5 +171,28 @@ namespace PersonalBlogPlatform.Core.Service
            
            await _userManager.UpdateAsync(user);
         }
+
+        public async Task<UserDto> GetUserProfileAsync()
+        {
+            var user = await GetCurrentUserAsync();
+
+            return _mapper.Map<UserDto>(user);
+        }
+
+        public async Task UpdateUserProfileAsync(UserDto userDto)
+        {
+            if (userDto == null)
+                throw new ArgumentNullException(nameof(userDto));
+
+            ValidationHelper.ModelValidation(userDto);
+
+            var user = await GetCurrentUserAsync();
+
+            _mapper.Map(userDto, user);
+
+            var result = await _userManager.UpdateAsync(user);
+            if (!result.Succeeded)
+                throw new ApplicationException(string.Join(",", result.Errors.Select(e => e.Description)));
+        }
     }
 }
