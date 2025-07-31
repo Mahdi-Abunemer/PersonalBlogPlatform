@@ -1,4 +1,6 @@
 ﻿using PersonalBlogPlatform.Core.Domain.IdentityEntities;
+using PersonalBlogPlatform.Core.DTO;
+using PersonalBlogPlatform.Core.Token;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +12,9 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
     public interface IProfileService
     {
        public Task<ApplicationUser> GetCurrentUserAsync();
+
+       public Task<ApplicationUser> Register(RegisterDto registerDto);
+
+       public Task StoreRefreshToken(ApplicationUser user , TokenResponse token);
     }
 }

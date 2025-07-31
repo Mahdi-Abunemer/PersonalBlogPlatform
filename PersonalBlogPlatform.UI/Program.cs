@@ -16,6 +16,7 @@ using PersonalBlogPlatform.UI.Filters;
 using PersonalBlogPlatform.UI.Middleware;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,10 +63,17 @@ builder.Services.AddScoped<IProfileService , ProfileService>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
+builder.Services.AddAutoMapper(typeof(RegisterDtoProfile).Assembly);
+
+builder.Services.AddScoped<RegisterUseCase>();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();
-});
+}).AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+}); 
 
 builder.Services.AddScoped<ITokenService , TokenService>();
 

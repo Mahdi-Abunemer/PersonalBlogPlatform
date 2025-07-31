@@ -17,6 +17,7 @@ namespace PersonalBlogPlatform.Core.DTO
 
         [Required(ErrorMessage = "Email can't be empty.")]
         [EmailAddress(ErrorMessage = "Email should be in a correct email  fromat")]
+        [DataType(DataType.EmailAddress)]
         public string? Email { get; set; }
 
         [Required(ErrorMessage = "Phone can't be empty.")]
