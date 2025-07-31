@@ -17,6 +17,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         private readonly LoginUseCase _loginUseCase;
         private readonly IProfileService _profileService;
         private readonly RefreshTokenUseCase _refreshTokenUseCase;
+
         public ProfileController (RegisterUseCase registerUseCase, LoginUseCase loginUseCase, IProfileService profileService, RefreshTokenUseCase refreshTokenUseCase)
         {
             _registerUseCase = registerUseCase;
@@ -77,8 +78,8 @@ namespace PersonalBlogPlatform.UI.Controllers
         [Authorize]
         public async Task<IActionResult> UpdateUserProfile(UserDto userDto)
         {
-            var user = await _profileService.UpdateUserProfileAsync(userDto);
-            return Ok(user);
+            await _profileService.UpdateUserProfileAsync(userDto);
+            return NoContent();
         }
     }
 }

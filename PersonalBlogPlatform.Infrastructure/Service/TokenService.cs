@@ -19,8 +19,8 @@ namespace PersonalBlogPlatform.Core.Service
     public class TokenService : ITokenService
     {
         private readonly IConfiguration _configuration;
-        //TO DO: Move all implementations of interfaces into Infrastructure layer 
         private readonly UserManager<ApplicationUser> _userManager;
+
         public TokenService (IConfiguration configuration , UserManager<ApplicationUser> userManager)
         {
             _configuration = configuration;

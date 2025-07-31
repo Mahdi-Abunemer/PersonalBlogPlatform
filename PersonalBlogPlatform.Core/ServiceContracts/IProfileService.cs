@@ -27,6 +27,6 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
 
        public Task<UserDto> GetUserProfileAsync();
 
-        public Task<UserDto> UpdateUserProfileAsync(UserDto userDto);
+        public Task UpdateUserProfileAsync(UserDto userDto);
     }
 }
