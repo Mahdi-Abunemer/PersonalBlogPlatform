@@ -20,5 +20,9 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
        public Task<ApplicationUser> Login(LoginDto loginDto);
 
        public Task Logout();
+
+       public Task<ApplicationUser> GetUserByRefreshToken(string refreshToken);
+
+       public bool ValidateRefreshToken(ApplicationUser user, string refreshToken);
     }
 }

@@ -69,6 +69,8 @@ builder.Services.AddScoped<RegisterUseCase>();
 
 builder.Services.AddScoped<LoginUseCase>();
 
+builder.Services.AddScoped<RefreshTokenUseCase>();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();

@@ -16,11 +16,13 @@ namespace PersonalBlogPlatform.UI.Controllers
         private readonly RegisterUseCase _registerUseCase;
         private readonly LoginUseCase _loginUseCase;
         private readonly IProfileService _profileService;
-        public ProfileController (RegisterUseCase registerUseCase, LoginUseCase loginUseCase, IProfileService profileService)
+        private readonly RefreshTokenUseCase _refreshTokenUseCase;
+        public ProfileController (RegisterUseCase registerUseCase, LoginUseCase loginUseCase, IProfileService profileService, RefreshTokenUseCase refreshTokenUseCase)
         {
             _registerUseCase = registerUseCase;
             _loginUseCase = loginUseCase;
             _profileService = profileService;
+            _refreshTokenUseCase = refreshTokenUseCase;
         }
 
         [HttpPost]
@@ -49,6 +51,16 @@ namespace PersonalBlogPlatform.UI.Controllers
             await _profileService.Logout();
 
             return NoContent();
+        }
+
+        [HttpPost]
+        [Route("[Action]")]
+        [Authorize]
+        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var newToken = await _refreshTokenUseCase.RenewAccessTokenAsync(request.RefreshToken);
+
+            return Ok(newToken);
         }
     }
 }

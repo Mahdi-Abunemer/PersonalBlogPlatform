@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using PersonalBlogPlatform.Core.Domain.IdentityEntities;
 using PersonalBlogPlatform.Core.DTO;
 using PersonalBlogPlatform.Core.Enums;
@@ -50,6 +51,22 @@ namespace PersonalBlogPlatform.Core.Service
                 throw new NotFoundException("User not found");
 
             return user;
+        }
+
+        public async Task<ApplicationUser> GetUserByRefreshToken(string refreshToken)
+        {
+            refreshToken = refreshToken?.Trim();
+
+            var user = await _userManager.Users.FirstOrDefaultAsync(r => r.RefreshToken == refreshToken);
+            if(user == null)
+                throw new NotFoundException("User not found");
+
+            return user;
+        }
+
+        public bool ValidateRefreshToken(ApplicationUser user, string refreshToken)
+        {
+          return user.RefreshToken == refreshToken && user.RefreshExpirationTime > DateTime.UtcNow;
         }
 
         public async Task<ApplicationUser> Login(LoginDto loginDto)
