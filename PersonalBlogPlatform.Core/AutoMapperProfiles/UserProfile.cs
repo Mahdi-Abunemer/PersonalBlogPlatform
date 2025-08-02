@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 
 namespace PersonalBlogPlatform.Core.AutoMapperProfiles
 {
-    public class RegisterDtoProfile : Profile
+    public class UserProfile : Profile
     {
-        public RegisterDtoProfile() 
+        public UserProfile()
         {
             CreateMap<RegisterDto, ApplicationUser>();
+
+            CreateMap<UserDto, ApplicationUser>();
+            CreateMap<ApplicationUser, UserDto>();
         }
     }
 }

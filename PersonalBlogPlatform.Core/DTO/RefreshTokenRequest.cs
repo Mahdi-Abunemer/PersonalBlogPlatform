@@ -10,5 +10,4 @@ namespace PersonalBlogPlatform.Core.DTO
     {
         public string RefreshToken { get; set; }
     }
-
 }

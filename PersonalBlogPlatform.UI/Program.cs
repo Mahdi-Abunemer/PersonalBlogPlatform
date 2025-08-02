@@ -63,15 +63,13 @@ builder.Services.AddScoped<IProfileService , ProfileService>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
-builder.Services.AddAutoMapper(typeof(RegisterDtoProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
 builder.Services.AddScoped<RegisterUseCase>();
 
 builder.Services.AddScoped<LoginUseCase>();
 
 builder.Services.AddScoped<RefreshTokenUseCase>();
-
-builder.Services.AddAutoMapper(typeof(UserDtoProfile).Assembly);
 
 builder.Services.AddControllers(options =>
 {
