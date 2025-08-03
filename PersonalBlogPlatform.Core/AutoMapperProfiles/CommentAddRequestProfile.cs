@@ -13,7 +13,10 @@ namespace PersonalBlogPlatform.Core.AutoMapperProfiles
     {
         public CommentAddRequestProfile() 
         {
-            CreateMap<CommentAddRequest, Comment>();
+            CreateMap<CommentAddRequest, Comment>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Post, o => o.Ignore())   
+            .ForMember(d => d.Author, o => o.Ignore()); 
         }
     }
 }
