@@ -29,7 +29,9 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
 
         public async Task<List<Post>> GetAllPosts()
         {
-           return await _db.Posts.Include(p => p.Categories).ToListAsync();
+           return await _db.Posts.Include(p => p.Categories)
+                .Include(p => p.Comments)
+                .ToListAsync();
         }
 
         public async Task<List<Post>> GetFilteredPosts(Guid categoryId)
@@ -52,6 +54,7 @@ namespace PersonalBlogPlatform.Infrastructure.Repositories
         public  async Task<Post?> GetPostByPostId(Guid postId)
         {
             return await _db.Posts.Include(p => p.Categories)
+                .Include(p => p.Comments)
                 .FirstOrDefaultAsync(p => p.Id == postId);
         }
 
