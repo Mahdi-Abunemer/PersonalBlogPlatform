@@ -58,6 +58,8 @@ builder.Services.AddScoped<IPostsService, PostsService>();
 
 builder.Services.AddScoped<ICommentService, CommentService>();
 
+builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
+
 builder.Services.AddAutoMapper(typeof(PostAddRequestProfile).Assembly);
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
