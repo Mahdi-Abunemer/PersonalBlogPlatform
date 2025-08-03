@@ -6,7 +6,7 @@ namespace PersonalBlogPlatform.Core.DTO
     {
         public Guid Id { get; set; }
 
-        public string contentText { get; set; }
+        public string ContentText { get; set; }
 
         public Guid PostId { get; set; }
 
