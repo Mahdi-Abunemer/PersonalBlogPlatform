@@ -133,7 +133,7 @@ namespace PersonalBlogPlatform.Core.Service
             post.PostDetails = postUpdateRequest.PostDetails;
             post.Content = postUpdateRequest.Content!;
             post.IsPublished = postUpdateRequest.IsPublished;
-
+          
             await _postsRepository.UpdatePost(post);
 
             return _mapper.Map<PostResponse>(post);

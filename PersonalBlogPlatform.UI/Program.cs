@@ -11,6 +11,7 @@ using PersonalBlogPlatform.Core.Service;
 using PersonalBlogPlatform.Core.ServiceContracts;
 using PersonalBlogPlatform.Infrastructure.DbContext;
 using PersonalBlogPlatform.Infrastructure.Repositories;
+using PersonalBlogPlatform.Infrastructure.Service;
 using PersonalBlogPlatform.UI.Authorization;
 using PersonalBlogPlatform.UI.Filters;
 using PersonalBlogPlatform.UI.Middleware;
@@ -55,6 +56,10 @@ builder.Services.AddScoped<IPostsRepository , PostsRepository>();
 
 builder.Services.AddScoped<IPostsService, PostsService>();
 
+builder.Services.AddScoped<ICommentService, CommentService>();
+
+builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
+
 builder.Services.AddAutoMapper(typeof(PostAddRequestProfile).Assembly);
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
@@ -63,6 +68,10 @@ builder.Services.AddScoped<IProfileService , ProfileService>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
+builder.Services.AddAutoMapper(typeof(CommentAddProfileRequest).Assembly);
+
+builder.Services.AddAutoMapper(typeof(CommentProfileResponse).Assembly);
+
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
 builder.Services.AddScoped<RegisterUseCase>();
@@ -70,6 +79,8 @@ builder.Services.AddScoped<RegisterUseCase>();
 builder.Services.AddScoped<LoginUseCase>();
 
 builder.Services.AddScoped<RefreshTokenUseCase>();
+
+builder.Services.AddScoped<PostDomainService>();
 
 builder.Services.AddControllers(options =>
 {
