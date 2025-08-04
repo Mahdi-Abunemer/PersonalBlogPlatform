@@ -68,9 +68,9 @@ builder.Services.AddScoped<IProfileService , ProfileService>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
 
-builder.Services.AddAutoMapper(typeof(CommentAddRequestProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(CommentAddProfileRequest).Assembly);
 
-builder.Services.AddAutoMapper(typeof(CommentResponseProfile).Assembly);
+builder.Services.AddAutoMapper(typeof(CommentProfileResponse).Assembly);
 
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 

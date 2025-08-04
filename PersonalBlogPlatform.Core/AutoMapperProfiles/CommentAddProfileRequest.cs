@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 
 namespace PersonalBlogPlatform.Core.AutoMapperProfiles
 {
-    public class CommentResponseProfile : Profile
+    public class CommentAddProfileRequest : Profile
     {
-        public CommentResponseProfile() 
+        public CommentAddProfileRequest() 
         {
-            CreateMap<Comment, CommentResponse>();
+            CreateMap<CommentAddRequest, Comment>()
+            .ForMember(d => d.Id, o => o.Ignore())
+            .ForMember(d => d.Post, o => o.Ignore())   
+            .ForMember(d => d.Author, o => o.Ignore()); 
         }
     }
 }

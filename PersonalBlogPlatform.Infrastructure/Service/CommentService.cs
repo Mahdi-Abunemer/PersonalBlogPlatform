@@ -110,7 +110,7 @@ namespace PersonalBlogPlatform.Infrastructure.Service
                 throw new ArgumentNullException(nameof(comment), $"Comment {request.Id} not found");
 
            comment.ContentText = request.ContentText;
-
+           
             await _commentsRepository.UpdateComment(comment);
 
             return _mapper.Map<CommentResponse>(comment);
