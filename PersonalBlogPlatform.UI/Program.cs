@@ -89,6 +89,8 @@ builder.Services.AddScoped<RefreshTokenUseCase>();
 
 builder.Services.AddScoped<PostDomainService>();
 
+builder.Services.AddScoped<IPostCategoryService, PostCategoryService>();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();

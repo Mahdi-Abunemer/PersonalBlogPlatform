@@ -16,7 +16,7 @@ namespace PersonalBlogPlatform.Core.Domain.Entities
         [Required, MaxLength(100)]
         public string Slug { get; set; } = string.Empty; // URL‑friendly
 
-        public virtual ICollection<Post>? Posts { get; set; }
+        public virtual ICollection<Post>? Posts { get; set; } = new List<Post>();
 
         [Required]
         public  Guid AuthorId { get; set; }

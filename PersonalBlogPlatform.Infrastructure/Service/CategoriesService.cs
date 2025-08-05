@@ -52,7 +52,7 @@ namespace PersonalBlogPlatform.Infrastructure.Service
         public async Task DeleteCategory(Guid categoryId)
         {
             if (categoryId == Guid.Empty)
-                throw new InvalidIDException($"Comment ID:{categoryId} cannot be empty");
+                throw new InvalidIDException($"Catgory ID:{categoryId} cannot be empty");
 
             var category = await _categoryRepository.GetCategoryByCategoryId(categoryId);
             if (category == null)
@@ -64,7 +64,7 @@ namespace PersonalBlogPlatform.Infrastructure.Service
         public async Task<CategoryResponse> GetCategoryByCategoryId(Guid categoryId)
         {
             if (categoryId == Guid.Empty)
-                throw new InvalidIDException($"Comment ID:{categoryId} cannot be empty");
+                throw new InvalidIDException($"Category ID:{categoryId} cannot be empty");
 
             var category = await _categoryRepository.GetCategoryByCategoryId(categoryId);
             if (category == null)
