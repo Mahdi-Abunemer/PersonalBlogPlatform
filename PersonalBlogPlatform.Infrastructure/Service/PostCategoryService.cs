@@ -1,5 +1,7 @@
-﻿using PersonalBlogPlatform.Core.Domain.Entities;
+﻿using AutoMapper;
+using PersonalBlogPlatform.Core.Domain.Entities;
 using PersonalBlogPlatform.Core.Domain.RepositoryContracts;
+using PersonalBlogPlatform.Core.DTO;
 using PersonalBlogPlatform.Core.Exceptions;
 using PersonalBlogPlatform.Core.ServiceContracts;
 using System;
@@ -14,14 +16,16 @@ namespace PersonalBlogPlatform.Infrastructure.Service
     {
         private readonly IPostsRepository _postsRepository;
         private readonly ICategoriesRepository _categoriesRepository;
+        private readonly IMapper _mapper;
 
-        public PostCategoryService(IPostsRepository postsRepository , ICategoriesRepository categoriesRepository) 
+        public PostCategoryService(IPostsRepository postsRepository , ICategoriesRepository categoriesRepository , IMapper mapper) 
         {
             _postsRepository = postsRepository;
             _categoriesRepository = categoriesRepository;
+            _mapper = mapper;
         }
 
-        public async Task AddPostToCategoryAsync(Guid categoryId, Guid postId)
+        public async Task<PostResponse> AddPostToCategoryAsync(Guid categoryId, Guid postId)
         {
             var category = await EnsureCategoryExist(categoryId);
 
@@ -33,6 +37,8 @@ namespace PersonalBlogPlatform.Infrastructure.Service
             category.Posts!.Add(post);
           
             await _categoriesRepository.UpdateCategory(category);
+
+            return _mapper.Map<PostResponse>(post);
         }
 
         public async Task RemovePostFromCategoryAsync(Guid categoryId, Guid postId)

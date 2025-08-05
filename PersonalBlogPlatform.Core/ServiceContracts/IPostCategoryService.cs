@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PersonalBlogPlatform.Core.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace PersonalBlogPlatform.Core.ServiceContracts
 {
     public interface IPostCategoryService
     {
-        Task AddPostToCategoryAsync(Guid categoryId, Guid postId);
+        Task<PostResponse> AddPostToCategoryAsync(Guid categoryId, Guid postId);
 
         Task RemovePostFromCategoryAsync(Guid categoryId, Guid postId);
     }
