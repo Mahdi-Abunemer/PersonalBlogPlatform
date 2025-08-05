@@ -18,6 +18,7 @@ using PersonalBlogPlatform.UI.Middleware;
 using Serilog;
 using System.Text;
 using System.Text.Json.Serialization;
+using PersonalBlogPlatform.Core.ServiceContracts; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,6 +64,8 @@ builder.Services.AddScoped<ICommentsRepository, CommentsRepository>();
 builder.Services.AddAutoMapper(typeof(PostAddRequestProfile).Assembly);
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
+
+builder.Services.AddScoped<ICategoriesService, CategoriesService>(); 
 
 builder.Services.AddScoped<IProfileService , ProfileService>();
 
