@@ -10,6 +10,8 @@ namespace PersonalBlogPlatform.Core.DTO
 
         public required string Slug { get; set; }
 
-        public virtual ICollection<Post>? Posts { get; set; }
+        public List<Guid> PostIds { get; set; } = new();
+
+        public Guid AuthorId { get; set; }
     }
 }

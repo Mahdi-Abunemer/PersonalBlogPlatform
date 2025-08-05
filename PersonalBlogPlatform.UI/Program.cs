@@ -74,6 +74,10 @@ builder.Services.AddAutoMapper(typeof(CommentProfileResponse).Assembly);
 
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
+builder.Services.AddAutoMapper(typeof(CategoryAddProfileRequest).Assembly);
+
+builder.Services.AddAutoMapper(typeof(CategoryProfileResponse).Assembly);
+
 builder.Services.AddScoped<RegisterUseCase>();
 
 builder.Services.AddScoped<LoginUseCase>();
