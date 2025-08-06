@@ -23,7 +23,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         [HttpGet]
         [Route("[Action]/{categoryId:guid}")]
         [Authorize(Roles = "Admin,User")]
-        public async Task<IActionResult> GetCategory(Guid categoryId)
+        public async Task<ActionResult<CategoryResponse>> GetCategory(Guid categoryId)
         {
            var category = await _categoriesService.GetCategoryByCategoryId(categoryId);
 
@@ -32,7 +32,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
-        public async Task<IActionResult> AddCategory([FromBody] CategoryAddRequest categoryAddRequest)
+        public async Task<ActionResult<CategoryResponse>> AddCategory([FromBody] CategoryAddRequest categoryAddRequest)
         {
             var category = await _categoriesService.AddCategory(categoryAddRequest);
 
@@ -50,7 +50,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPut]
         [Route("[Action]")]
-        public async Task<IActionResult> UpdateCategory([FromBody] CategoryUpdateRequest categoryUpdateRequest)
+        public async Task<ActionResult<CategoryResponse>> UpdateCategory([FromBody] CategoryUpdateRequest categoryUpdateRequest)
         {
             var updatedCategory = await _categoriesService.UpdateCategory(categoryUpdateRequest);
 
@@ -59,7 +59,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]/{categoryId:guid}")]
-        public async Task<IActionResult> AddPostToCategory(Guid categoryId,[FromQuery] Guid postId)
+        public async Task<ActionResult<PostResponse>> AddPostToCategory(Guid categoryId,[FromQuery] Guid postId)
         {
             var post = await _postCategoryService.AddPostToCategoryAsync(categoryId, postId);
 

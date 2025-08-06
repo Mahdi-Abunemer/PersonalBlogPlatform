@@ -28,7 +28,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        public async Task<ActionResult<TokenResponse>> Register([FromBody] RegisterDto registerDto)
         {
             var token = await _registerUseCase.RegisterUserAsync(registerDto);
 
@@ -37,7 +37,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
-        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<ActionResult<TokenResponse>> Login([FromBody] LoginDto loginDto)
         {
             var token = await _loginUseCase.LoginUserAsync(loginDto);
 
@@ -57,7 +57,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         [HttpPost]
         [Route("[Action]")]
         [Authorize]
-        public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+        public async Task<ActionResult<TokenResponse>> RefreshToken([FromBody] RefreshTokenRequest request)
         {
             var newToken = await _refreshTokenUseCase.RenewAccessTokenAsync(request.RefreshToken);
 
@@ -67,7 +67,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         [HttpGet]
         [Route("[Action]")]
         [Authorize]
-        public async Task<IActionResult> GetUserProfile()
+        public async Task<ActionResult<UserDto>> GetUserProfile()
         {
             var user = await _profileService.GetUserProfileAsync();
             return Ok(user);

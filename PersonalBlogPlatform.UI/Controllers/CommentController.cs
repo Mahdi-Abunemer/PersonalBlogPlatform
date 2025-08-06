@@ -21,7 +21,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpGet]
         [Route("[Action]/{postId:guid}")]
-        public async Task<IActionResult> GetAllCommentsByPostId(Guid postId)
+        public async Task<ActionResult<List<CommentResponse>>> GetAllCommentsByPostId(Guid postId)
         {
             List<CommentResponse> comments = await _commentService.GetAllCommentsByPostId(postId);
 
@@ -30,7 +30,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpGet]
         [Route("[Action]/{commentId:guid}")]
-        public async Task<IActionResult> GetCommentByCommentId(Guid commentId)
+        public async Task<ActionResult<CommentResponse>> GetCommentByCommentId(Guid commentId)
         {
             var comment = await _commentService.GetCommentByCommentId(commentId);
 
@@ -39,7 +39,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
-        public async Task<IActionResult> AddComment([FromBody] CommentAddRequest commentAddRequest)
+        public async Task<ActionResult<CommentResponse>> AddComment([FromBody] CommentAddRequest commentAddRequest)
         {
             var comment = await _commentService.AddComment(commentAddRequest);
 
@@ -57,7 +57,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPut]
         [Route("[Action]")]
-        public async Task<IActionResult> UpdateComment([FromBody] CommentUpdateRequest request)
+        public async Task<ActionResult<CommentResponse>> UpdateComment([FromBody] CommentUpdateRequest request)
         {
             var updatedComment = await _commentService.UpdateComment(request);
 
