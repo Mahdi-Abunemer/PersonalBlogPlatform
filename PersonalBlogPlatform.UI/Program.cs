@@ -18,6 +18,7 @@ using PersonalBlogPlatform.UI.Middleware;
 using Serilog;
 using System.Text;
 using System.Text.Json.Serialization;
+using PersonalBlogPlatform.Core.ServiceContracts; 
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,6 +65,8 @@ builder.Services.AddAutoMapper(typeof(PostAddRequestProfile).Assembly);
 
 builder.Services.AddScoped<ICategoriesRepository, CategoriesRepository>();
 
+builder.Services.AddScoped<ICategoriesService, CategoriesService>(); 
+
 builder.Services.AddScoped<IProfileService , ProfileService>();
 
 builder.Services.AddAutoMapper(typeof(PostResponseProfile).Assembly);
@@ -74,6 +77,10 @@ builder.Services.AddAutoMapper(typeof(CommentProfileResponse).Assembly);
 
 builder.Services.AddAutoMapper(typeof(UserProfile).Assembly);
 
+builder.Services.AddAutoMapper(typeof(CategoryAddProfileRequest).Assembly);
+
+builder.Services.AddAutoMapper(typeof(CategoryProfileResponse).Assembly);
+
 builder.Services.AddScoped<RegisterUseCase>();
 
 builder.Services.AddScoped<LoginUseCase>();
@@ -81,6 +88,8 @@ builder.Services.AddScoped<LoginUseCase>();
 builder.Services.AddScoped<RefreshTokenUseCase>();
 
 builder.Services.AddScoped<PostDomainService>();
+
+builder.Services.AddScoped<IPostCategoryService, PostCategoryService>();
 
 builder.Services.AddControllers(options =>
 {
