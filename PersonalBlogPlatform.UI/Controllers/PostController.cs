@@ -20,7 +20,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllPosts() 
+        public async Task<ActionResult<List<PostResponse>>> GetAllPosts() 
         {
           var postsResponses = await _postsService.GetAllPosts();
 
@@ -29,7 +29,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpGet]
         [Route("[Action]/{postId:guid}")]
-        public async Task<IActionResult> GetPost(Guid postId) 
+        public async Task<ActionResult<PostResponse>> GetPost(Guid postId) 
         {
            var post = await _postsService.GetPostById(postId);
 
@@ -38,7 +38,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpGet]
         [Route("[Action]/{categoryId:guid}")]
-        public async Task<IActionResult> GetFilteredPosts(Guid categoryId)
+        public async Task<ActionResult<List<PostResponse>>> GetFilteredPosts(Guid categoryId)
         {
             var posts = await _postsService.GetFilteredPosts(categoryId);
 
@@ -48,7 +48,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         [AllowAnonymous]
         [HttpGet]
         [Route("[Action]")]
-        public async Task<IActionResult> GetLatestPosts([FromQuery] int count =5) 
+        public async Task<ActionResult<List<PostResponse>>> GetLatestPosts([FromQuery] int count =5) 
         {
             var posts = await _postsService.GetLatestPosts(count);
 
@@ -58,7 +58,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         [Authorize(Policy = "AdminOnly")]
         [HttpPost]
         [Route("[Action]")]
-        public async Task<IActionResult> Add([FromBody] PostAddRequest postAddRequest)
+        public async Task<ActionResult<PostResponse>> Add([FromBody] PostAddRequest postAddRequest)
         {
             var user = await _profileService.GetCurrentUserAsync();
             var post = await _postsService.AddPost(postAddRequest , user.Id);
@@ -79,7 +79,7 @@ namespace PersonalBlogPlatform.UI.Controllers
         [Authorize(Policy = "AdminOnly")]
         [HttpPut]
         [Route("[Action]")]
-        public async Task<IActionResult> Update([FromBody] PostUpdateRequest postUpdateRequest)
+        public async Task<ActionResult<PostResponse>> Update([FromBody] PostUpdateRequest postUpdateRequest)
         {
             var post = await _postsService.UpdatePost(postUpdateRequest);
 
