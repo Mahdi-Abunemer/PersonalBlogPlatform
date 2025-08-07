@@ -5,7 +5,7 @@ using PersonalBlogPlatform.Core.Domain.Entities;
 using PersonalBlogPlatform.Core.DTO;
 using PersonalBlogPlatform.Core.ServiceContracts;
 
-namespace PersonalBlogPlatform.UI.Controllers
+namespace PersonalBlogPlatform.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -6,7 +6,7 @@ using PersonalBlogPlatform.Core.Service;
 using PersonalBlogPlatform.Core.ServiceContracts;
 using PersonalBlogPlatform.Core.Token;
 
-namespace PersonalBlogPlatform.UI.Controllers
+namespace PersonalBlogPlatform.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

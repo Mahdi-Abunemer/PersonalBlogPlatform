@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using PersonalBlogPlatform.Core.Exceptions;
 
-namespace PersonalBlogPlatform.UI.Authorization
+namespace PersonalBlogPlatform.API.Authorization
 {
     public class AdminRequirementHandler : AuthorizationHandler<AdminRequirement>
     {
