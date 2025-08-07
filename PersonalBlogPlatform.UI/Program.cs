@@ -135,10 +135,21 @@ if (app.Environment.IsDevelopment())
     app.UseExceptionHadlingMiddleware();
 }
 
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+
 app.UseStaticFiles();
+
 app.UseRouting();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
