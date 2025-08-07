@@ -8,7 +8,6 @@ namespace PersonalBlogPlatform.UI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Policy = "AdminOnly")]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoriesService _categoriesService;
@@ -32,6 +31,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<ActionResult<CategoryResponse>> AddCategory([FromBody] CategoryAddRequest categoryAddRequest)
         {
             var category = await _categoriesService.AddCategory(categoryAddRequest);
@@ -41,6 +41,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpDelete]
         [Route("[Action]/{categoryId:guid}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> DeleteCategory(Guid categoryId)
         {
             await _categoriesService.DeleteCategory(categoryId);
@@ -50,6 +51,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPut]
         [Route("[Action]")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<ActionResult<CategoryResponse>> UpdateCategory([FromBody] CategoryUpdateRequest categoryUpdateRequest)
         {
             var updatedCategory = await _categoriesService.UpdateCategory(categoryUpdateRequest);
@@ -59,6 +61,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]/{categoryId:guid}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<ActionResult<PostResponse>> AddPostToCategory(Guid categoryId,[FromQuery] Guid postId)
         {
             var post = await _postCategoryService.AddPostToCategoryAsync(categoryId, postId);
@@ -68,6 +71,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpDelete]
         [Route("[Action]/{categoryId:guid}")]
+        [Authorize(Policy = "AdminOnly")]
         public async Task<IActionResult> RemovePostFromCategory(Guid categoryId,[FromQuery] Guid postId)
         {
             await _postCategoryService.RemovePostFromCategoryAsync(categoryId, postId);

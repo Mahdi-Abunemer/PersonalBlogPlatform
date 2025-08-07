@@ -42,8 +42,10 @@ namespace PersonalBlogPlatform.Core.Service
             {
                 new Claim(JwtRegisteredClaimNames.Sub , applicationUser.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti ,Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat ,DateTime.UtcNow.ToString()),
-                new Claim(ClaimTypes.NameIdentifier, applicationUser.Email ?? string.Empty),
+                new Claim(JwtRegisteredClaimNames.Iat,
+                      new DateTimeOffset(DateTime.UtcNow).ToUnixTimeSeconds().ToString(),
+                        ClaimValueTypes.Integer64),
+                new Claim(ClaimTypes.NameIdentifier, applicationUser.Id.ToString()),
                 new Claim(ClaimTypes.Name, applicationUser.DisplayName ?? string.Empty),
                 new Claim(ClaimTypes.Role , role.ToString())
             };

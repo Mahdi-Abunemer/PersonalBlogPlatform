@@ -11,6 +11,7 @@ using PersonalBlogPlatform.Core.ServiceContracts;
 using PersonalBlogPlatform.Core.Token;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Authentication;
 using System.Security.Claims;
@@ -41,7 +42,8 @@ namespace PersonalBlogPlatform.Core.Service
             var userId = _contextAccessor
                 .HttpContext
                 .User
-                .FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                .FindFirst(ClaimTypes.NameIdentifier)?
+                .Value;
 
             if (string.IsNullOrEmpty(userId))
                 throw new UnauthorizedAccessException("Access denied: user is not authenticated.");

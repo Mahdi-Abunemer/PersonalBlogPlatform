@@ -91,6 +91,8 @@ builder.Services.AddScoped<PostDomainService>();
 
 builder.Services.AddScoped<IPostCategoryService, PostCategoryService>();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();
@@ -125,6 +127,8 @@ builder.Services.AddAuthentication(options =>
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
