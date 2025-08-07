@@ -12,9 +12,9 @@ using PersonalBlogPlatform.Core.ServiceContracts;
 using PersonalBlogPlatform.Infrastructure.DbContext;
 using PersonalBlogPlatform.Infrastructure.Repositories;
 using PersonalBlogPlatform.Infrastructure.Service;
-using PersonalBlogPlatform.UI.Authorization;
-using PersonalBlogPlatform.UI.Filters;
-using PersonalBlogPlatform.UI.Middleware;
+using PersonalBlogPlatform.API.Authorization;
+using PersonalBlogPlatform.API.Filters;
+using PersonalBlogPlatform.API.Middleware;
 using Serilog;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -91,6 +91,8 @@ builder.Services.AddScoped<PostDomainService>();
 
 builder.Services.AddScoped<IPostCategoryService, PostCategoryService>();
 
+builder.Services.AddHttpContextAccessor();
+
 builder.Services.AddControllers(options =>
 {
     options.Filters.Add<LoggingActionFilter>();
@@ -125,6 +127,8 @@ builder.Services.AddAuthentication(options =>
 //Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 

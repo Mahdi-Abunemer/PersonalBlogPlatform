@@ -6,11 +6,10 @@ using PersonalBlogPlatform.Core.Service;
 using PersonalBlogPlatform.Core.ServiceContracts;
 using PersonalBlogPlatform.Core.Token;
 
-namespace PersonalBlogPlatform.UI.Controllers
+namespace PersonalBlogPlatform.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class ProfileController : ControllerBase
     {
         private readonly RegisterUseCase _registerUseCase;
@@ -28,6 +27,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
+        [AllowAnonymous]
         public async Task<ActionResult<TokenResponse>> Register([FromBody] RegisterDto registerDto)
         {
             var token = await _registerUseCase.RegisterUserAsync(registerDto);
@@ -37,6 +37,7 @@ namespace PersonalBlogPlatform.UI.Controllers
 
         [HttpPost]
         [Route("[Action]")]
+        [AllowAnonymous]
         public async Task<ActionResult<TokenResponse>> Login([FromBody] LoginDto loginDto)
         {
             var token = await _loginUseCase.LoginUserAsync(loginDto);

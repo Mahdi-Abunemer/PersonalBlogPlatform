@@ -23,6 +23,6 @@ namespace PersonalBlogPlatform.Core.DTO
         [Required(ErrorMessage = "Phone can't be empty.")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Phone number should contain numbers only")]
         [DataType(DataType.PhoneNumber)]
-        public string? Phone { get; set; }
+        public string? PhoneNumber { get; set; }
     }
 }

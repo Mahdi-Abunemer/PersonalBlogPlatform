@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace PersonalBlogPlatform.UI.Filters
+namespace PersonalBlogPlatform.API.Filters
 {
     public class LoggingActionFilter : IActionFilter
     {
