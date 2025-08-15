@@ -17,7 +17,7 @@ namespace PersonalBlogPlatform.Infrastructure.Service
             _postRepository = repo; 
         }
 
-        public async Task EnsureExists(Guid postId)
+        public async virtual Task EnsureExists(Guid postId)
         {
             if (postId == Guid.Empty)
                 throw new InvalidIDException($"Post ID:{postId} cannot be empty");

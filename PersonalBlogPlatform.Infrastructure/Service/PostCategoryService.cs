@@ -52,8 +52,11 @@ namespace PersonalBlogPlatform.Infrastructure.Service
             if (!category.Posts!.Any(p => p.Id == postId))
                 throw new NotFoundException($"Post: {postId} is not associated with Category: {categoryId}");
 
-             category.Posts!.Remove(post);
-          
+            // category.Posts!.Remove(post);
+            var existing = category.Posts!.FirstOrDefault(p => p.Id == post.Id);
+            if (existing != null)
+                category.Posts.Remove(existing);
+
             await _categoriesRepository.UpdateCategory(category);
         }
 
