@@ -15,11 +15,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBlogPlatform.API", "PersonalBlogPlatform.API\PersonalBlogPlatform.API.csproj", "{542ACE2D-8C1F-6F23-9722-24762F6B1195}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalBlogPlatform.ServiceTests", "PersonalBlogPlatform.ServiceTests\PersonalBlogPlatform.ServiceTests.csproj", "{EFFDB788-9FE3-4955-86A4-B2DCAAD62C9D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{DA8D973F-5474-4754-9772-641F3EEA1471}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
